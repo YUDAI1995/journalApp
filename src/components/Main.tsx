@@ -48,7 +48,7 @@ export const Main: React.FC = () => {
       <section className="container mx-auto px-5 py-10 text-gray-600">
         <div className="flex flex-col md:flex-row">
           <div className="mb-10 w-5/6 md:mb-0 md:w-1/2 lg:w-full lg:max-w-lg">
-            <h2 className="mb-4 text-3xl font-medium text-gray-900 sm:text-4xl">timeline</h2>
+            <h2 className="mb-4 text-3xl font-medium text-gray-900 sm:text-4xl">Timeline</h2>
             <ul>
               {diaryArray.map((item: IDiaryArray, index: number) => {
                 return <li key={index}>{item.title}</li>;
