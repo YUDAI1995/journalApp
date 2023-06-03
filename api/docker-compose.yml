@@ -1,0 +1,42 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: journaldb
+    volumes:
+      - mysql-data-volume:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    environment:
+      TZ: 'Asia/Tokyo'
+      MYSQL_ROOT_PASSWORD: Password
+      MYSQL_DATABASE: journaldb
+      MYSQL_USER: Admin
+      MYSQL_PASSWORD: Password
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: 'swagger-editor'
+    ports:
+      - '8001:8080'
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: 'swagger-ui'
+    ports:
+      - '8002:8080'
+    volumes:
+      - ./swagger/openapi.yaml:/openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
+
+  swagger-api:
+    image: stoplight/prism:3
+    container_name: 'swagger-api'
+    ports:
+      - '8003:4010'
+    command: mock -h 0.0.0.0 /openapi.yaml
+    volumes:
+      - ./swagger/openapi.yaml:/openapi.yaml
+volumes:
+  mysql-data-volume:
